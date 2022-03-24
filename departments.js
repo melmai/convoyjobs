@@ -18,7 +18,7 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
       if (!dept.jobs.length) return false;
 
       // create accordion elements and category filter
-      let toggle = document.createElement("button");
+      let toggle = document.createElement("div");
       let panel = document.createElement("div");
       let categoryOption = document.createElement("option");
 
