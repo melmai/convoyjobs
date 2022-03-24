@@ -1,7 +1,6 @@
 let jobList = document.getElementById("jobs");
 let categoryFilter = document.getElementById("category");
 const list = document.createDocumentFragment();
-let currList;
 
 fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
   .then((response) => response.json())
@@ -53,8 +52,6 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 
       list.appendChild(toggle);
       list.appendChild(panel);
-      currList = list;
-      // console.log(currList);
     });
     jobList.appendChild(list);
 
@@ -67,18 +64,27 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 const filterByCategory = () => {
   let dropdown = document.getElementById("category");
   let cat = dropdown.options[dropdown.selectedIndex].value;
-
   let depts = document.querySelectorAll("div.department");
-  console.log(depts);
-  depts.forEach((dept) => {
-    if (!dept.classList.contains(cat)) {
-      dept.classList.add("hidden");
-      dept.nextElementSibling.classList.add("hidden");
-    } else {
-      dept.classList.remove("hidden");
-      dept.nextElementSibling.classList.remove("hidden");
-    }
-  });
+
+  if (cat === "all") {
+    depts.forEach((dept) => {
+      if (dept.classList.contains("hidden")) {
+        dept.classList.remove("hidden");
+      } else {
+        dept.nextElementSibling.classList.add("hidden");
+      }
+    });
+  } else {
+    depts.forEach((dept) => {
+      if (!dept.classList.contains(cat)) {
+        dept.classList.add("hidden");
+        dept.nextElementSibling.classList.add("hidden");
+      } else {
+        dept.classList.remove("hidden");
+        dept.nextElementSibling.classList.remove("hidden");
+      }
+    });
+  }
 };
 
 // toggle accordion
