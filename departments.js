@@ -14,6 +14,10 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 
     // create sections for each dept
     departments.map((dept) => {
+      // skip dept if no jobs found
+      if (!dept.jobs.length) return false;
+
+      // create accordion elements and category filter
       let toggle = document.createElement("button");
       let panel = document.createElement("div");
       let categoryOption = document.createElement("option");
@@ -28,6 +32,9 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
       toggle.setAttribute("class", "department");
       toggle.classList.add(attrValue);
       toggle.innerHTML = `${dept.name}`;
+
+      // add event listener
+      toggle.addEventListener("click", toggleAccordion);
 
       // add classes to panel
       panel.setAttribute("class", "panel");
@@ -68,4 +75,6 @@ const filterbyCategory = (cat) => {
 };
 
 // toggle accordion
-const toggleAccordion = this;
+const toggleAccordion = (e) => {
+  e.target.nextElementSibling.classList.toggle("hidden");
+};
