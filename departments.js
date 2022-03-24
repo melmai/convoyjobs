@@ -14,8 +14,8 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 
     // create sections for each dept
     departments.map((dept) => {
-      let deptContainer = document.createElement("div");
-      let deptTitle = document.createElement("h2");
+      let toggle = document.createElement("button");
+      let panel = document.createElement("div");
       let categoryOption = document.createElement("option");
 
       // populate category filter
@@ -24,13 +24,14 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
       categoryOption.setAttribute("value", attrValue);
       categoryFilter.appendChild(categoryOption);
 
-      // assign classes to accordion
-      deptContainer.setAttribute("class", "department");
-      deptContainer.classList.add(attrValue);
+      // assign classes to accordion and add title to value
+      toggle.setAttribute("class", "department");
+      toggle.classList.add(attrValue);
+      toggle.innerHTML = `${dept.name}`;
 
-      // populate department titles
-      deptTitle.innerHTML = `${dept.name}`;
-      deptContainer.appendChild(deptTitle);
+      // add classes to panel
+      panel.setAttribute("class", "panel");
+      panel.classList.add("hidden");
 
       // create job listings for each dept
       dept.jobs.map((job) => {
@@ -39,11 +40,12 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 
         jobTitle.innerHTML = `<a href="${job.absolute_url}" target="_blank">${job.title}</a>`;
         jobLocation.innerHTML = `${job.location.name}`;
-        deptContainer.appendChild(jobTitle);
-        deptContainer.appendChild(jobLocation);
+        panel.appendChild(jobTitle);
+        panel.appendChild(jobLocation);
       });
 
-      list.appendChild(deptContainer);
+      list.appendChild(toggle);
+      list.appendChild(panel);
       currList = list;
       // console.log(currList);
     });
