@@ -64,12 +64,19 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
   .catch((error) => console.log(error));
 
 // filter list by category - hide all but current selected category
-const filterbyCategory = (cat) => {
+const filterByCategory = () => {
+  let dropdown = document.getElementById("category");
+  let cat = dropdown.options[dropdown.selectedIndex].value;
+
   let depts = document.querySelectorAll("div.department");
   console.log(depts);
   depts.forEach((dept) => {
     if (!dept.classList.contains(cat)) {
       dept.classList.add("hidden");
+      dept.nextElementSibling.classList.add("hidden");
+    } else {
+      dept.classList.remove("hidden");
+      dept.nextElementSibling.classList.remove("hidden");
     }
   });
 };
