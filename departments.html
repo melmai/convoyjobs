@@ -35,7 +35,9 @@
   </head>
   <body>
     <!-- Filters -->
-    <select name="category" id="category"></select>
+    <select name="category" id="category" onChange="filterByCategory()">
+      <option value="all">All</option>
+    </select>
 
     <!-- Job Listings -->
     <div id="jobs"></div>
