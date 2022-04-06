@@ -1,5 +1,5 @@
-let jobList = document.getElementById("jobs");
-let categoryFilter = document.getElementById("category");
+const jobList = document.getElementById("jobs");
+const categoryFilter = document.getElementById("category");
 const list = document.createDocumentFragment();
 
 fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
@@ -9,14 +9,14 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
     // console.log(data.departments);
 
     // data is job listings
-    let departments = data.departments;
+    const departments = data.departments;
 
     // create sections for each dept
     departments.map((dept) => {
       // skip dept if no jobs found
       if (!dept.jobs.length) return false;
 
-      // create accordion elements and category filter
+      // create accordion elements and category filter if jobs available in category
       let toggle = document.createElement("div");
       let panel = document.createElement("div");
       let categoryOption = document.createElement("option");
@@ -62,9 +62,8 @@ fetch("https://boards-api.greenhouse.io/v1/boards/convoy/departments")
 
 // filter list by category - hide all but current selected category
 const filterByCategory = () => {
-  let dropdown = document.getElementById("category");
-  let cat = dropdown.options[dropdown.selectedIndex].value;
-  let depts = document.querySelectorAll("div.department");
+  const cat = categoryFilter.options[categoryFilter.selectedIndex].value;
+  const depts = document.querySelectorAll("div.department");
 
   if (cat === "all") {
     depts.forEach((dept) => {
